@@ -54,8 +54,13 @@ RUN git clone -b docker --single-branch https://github.com/KacperSzyf/arches.git
 # Install Yarn components
 RUN yarn install
 
+#Create and run venv
+ENV VIRTUAL_ENV=env
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH=”$VIRTUAL_ENV/bin:$PATH”
+
 # install cloned arches repo as a pip package
-RUN pip install -e . --no-use-pep517 && pip install -r arches/install/requirements_dev.txt
+RUN pip install -e .  --no-use-pep517 --src /usr/local/src && pip install -r arches/install/requirements_dev.txt
 
 RUN mkdir /var/log/supervisor
 RUN mkdir /var/log/celery
