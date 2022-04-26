@@ -49,7 +49,7 @@ RUN set -ex \
 
 WORKDIR ${ARCHES_ROOT}
 #Clone v6 arches
-RUN git clone -b 6.0.0 --single-branch https://github.com/archesproject/arches.git .
+RUN git clone -b docker --single-branch https://github.com/KacperSzyf/arches.git .
 
 # Install Yarn components
 RUN yarn install
@@ -60,16 +60,10 @@ RUN pip install -e . --no-use-pep517 && pip install -r arches/install/requiremen
 RUN mkdir /var/log/supervisor
 RUN mkdir /var/log/celery
 
-#Temporary settings from Arches HER
-WORKDIR ${ARCHES_ROOT}/docker
-RUN rm -f settings_local.py
-RUN wget https://raw.githubusercontent.com/archesproject/arches/master/docker/settings_local.py
-RUN wget https://raw.githubusercontent.com/archesproject/arches-her/master/docker/settings_docker.py
-
 # Set default workdir
 WORKDIR ${WEB_ROOT}
 #Temporary, override current v6 entry point with Arches HER entry point
-RUN wget https://raw.githubusercontent.com/archesproject/arches-her/master/docker/entrypoint.sh 
+RUN cp ${ARCHES_ROOT}/docker/entrypoint.sh .
 RUN chmod -R 700 ${WEB_ROOT}/entrypoint.sh &&\
   dos2unix ${WEB_ROOT}/entrypoint.sh
 
