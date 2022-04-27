@@ -2,11 +2,13 @@ version: '3.8'
 services:
     arches:
       container_name: dev_arches
-      image: 741f71bf1dcf
+      image: b019c0b08a59
       build:
         context: .
         dockerfile: ./Dockerfile
       command: init_arches
+      volumes:
+        - /mnt/d/docker/web_root/:/root/web_root/
       env_file:
         - ./docker/env_file.env
       ports:
@@ -20,6 +22,3 @@ networks:
     external: true
     name: arches_dev
 
-volumes:
-    arches-log:
-    arches-static:

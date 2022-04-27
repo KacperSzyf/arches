@@ -69,8 +69,8 @@ RUN mkdir /var/log/celery
 WORKDIR ${WEB_ROOT}
 #Temporary, override current v6 entry point with Arches HER entry point
 RUN cp ${ARCHES_ROOT}/docker/entrypoint.sh .
-RUN chmod -R 700 ${WEB_ROOT}/entrypoint.sh &&\
-  dos2unix ${WEB_ROOT}/entrypoint.sh
+RUN chmod -R 700 ./entrypoint.sh 
+RUN dos2unix ./entrypoint.sh
 
 RUN rm -rf /root/.cache/pip/*
 
